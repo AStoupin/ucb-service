@@ -1,0 +1,549 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.cetelem.ru/ucbservice/api/schema"
+	xmlns:tns="http://www.cetelem.ru/ucbservice/api/schema">
+
+
+
+	<xs:element name="invokeRequest" type="tns:invokeRequest" />
+	<xs:element name="invokeResponse" type="tns:invokeResponse" />
+
+
+	<xs:complexType name="invokeRequest">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="ucbInvokeModeCode"
+				type="tns:ucbInvokeModeCode" />
+			<xs:element minOccurs="1" name="creditBureauRequest"
+				type="tns:creditBureauRequest" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="invokeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="out"
+				type="tns:creditBureauResponse" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:element name="getOrInvokeRequest"
+		type="tns:getOrInvokeRequest" />
+
+	<xs:element name="getOrInvokeResponse"
+		type="tns:getOrInvokeResponse" />
+
+
+	<xs:complexType name="getOrInvokeRequest">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="creditBureauRequest"
+				type="tns:creditBureauRequest" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="getOrInvokeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="out"
+				type="tns:creditBureauResponse" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+
+	<xs:complexType name="creditBureauRequest">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="expertiseId"
+				type="xs:long" />
+			<xs:element minOccurs="0" name="numautoId"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="registrationAddress"
+				type="tns:address" />
+			<xs:element minOccurs="0" name="livingAddress"
+				type="tns:address" />
+			<xs:element minOccurs="0" name="passport"
+				type="tns:passport" />
+			<xs:element minOccurs="0" name="inquiry"
+				type="tns:inquiry" />
+			<xs:element minOccurs="0" name="name" type="tns:name" />
+			<xs:element minOccurs="0" name="gender" type="xs:token" />
+			<xs:element name="birth" type="tns:birth" />
+			<xs:element name="primaryIncome" type="xs:decimal" />
+			<xs:element name="reason" type="xs:string" />
+			<xs:element name="consent" type="tns:consent" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="creditBureauResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="responseData"
+				type="tns:responseData" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="errors" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:simpleType name="ucbInvokeModeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ONLINE" />
+			<xs:enumeration value="ONLINE_SCORE" />
+			<xs:enumeration value="OFFLINE" />
+			<xs:enumeration value="OFFLINE_SCORE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="address">
+		<xs:sequence>
+			<xs:element name="zipCode" type="xs:string" />
+			<xs:element name="regionCode" type="xs:string" />
+			<xs:element name="cityName" type="xs:string" />
+			<xs:element name="streetName" type="xs:string" />
+			<xs:element name="house" type="xs:string" />
+			<xs:element name="corpus" type="xs:string" />
+			<xs:element name="building" type="xs:string" />
+			<xs:element name="flat" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="passport">
+		<xs:sequence>
+			<xs:element name="seriesNumber" type="xs:string" />
+			<xs:element name="number" type="xs:string" />
+			<xs:element name="issueDate" type="xs:date" />
+			<xs:element name="issueAuthority" type="xs:string" />
+			<xs:element name="issueAuthorityCode" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inquiry">
+		<xs:sequence>
+			<xs:element name="salesType" type="xs:string" />
+			<xs:element name="amount" type="xs:decimal" />
+			<xs:element name="currencyCode" type="xs:string" />
+			<xs:element name="installment" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="name">
+		<xs:sequence>
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="patronymic" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="birth">
+		<xs:sequence>
+			<xs:element name="place" type="xs:string" />
+			<xs:element name="date" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="consent">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="date" type="xs:date" />
+			<xs:element minOccurs="0" name="dateExpire" type="xs:date" />
+			<xs:element minOccurs="0" name="purpose" type="xs:token" />
+			<xs:element minOccurs="0" name="purposeDetail"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="responseData">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="accounts" nillable="true" type="tns:account" />
+			<xs:element minOccurs="0" name="totalAccounts"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="negativeRatingAccounts"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="totalActiveAccounts"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerHour"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerDay"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerWeek"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerMonth"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiries30Days"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerQuarter"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiriesPerYear"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="recentInquiries24Months"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="totalInquiries"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="scoring"
+				type="tns:scoring" />
+			<xs:element minOccurs="0" name="subjectCourtInfo"
+				type="xs:string" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="replyWarnings" nillable="true" type="xs:token" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="replyErrors" nillable="true" type="tns:replyError" />
+			<xs:element name="creditBureauName" type="xs:string" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="clientAddresses" nillable="true" type="tns:clientAddress" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="clientContacts" nillable="true" type="tns:clientContact" />
+			<xs:element minOccurs="0" name="consentFlag"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="callFlag" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="account">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ownerCode" type="xs:token" />
+			<xs:element minOccurs="0" name="accountRatingCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="accountRatingDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="accountType"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="accountCourtInfo"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="outstandingAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="overdueAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="overdueMaxAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="overdueDays" type="xs:int" />
+			<xs:element minOccurs="0" name="overdueCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="creditClosedDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="creditEndDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="creditProlongation"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="creditLimitAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="creditUnusedLimitAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="creditCollateralCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="creditFacilityCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="currentBalanceAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="currencyCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="interestPaymentDueDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="interestFrequencyCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="lastPaymentDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="lastUpdatedDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="paymentPattern"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="paymentPatternStartDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="monthsReviewed"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="numDays6" type="xs:int" />
+			<xs:element minOccurs="0" name="numDays6to30"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="numDaysA" type="xs:int" />
+			<xs:element minOccurs="0" name="numDays30" type="xs:int" />
+			<xs:element minOccurs="0" name="numDays60" type="xs:int" />
+			<xs:element minOccurs="0" name="numDays90" type="xs:int" />
+			<xs:element minOccurs="0" name="numDaysConsolidation"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="numDaysRepossession"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="numDaysBadDebt"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="numDaysUnknown"
+				type="xs:int" />
+			<xs:element minOccurs="0" name="openedDate" type="xs:date" />
+			<xs:element minOccurs="0" name="paymentDueDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="reportingDate"
+				type="xs:date" />
+			<xs:element minOccurs="0" name="termsAmount"
+				type="xs:decimal" />
+			<xs:element minOccurs="0" name="termsFrequencyCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="disputedStatusCode"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="ownAccount"
+				type="xs:boolean" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="addresses" nillable="true" type="tns:creditBureauAddress" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="creditBureauAddress">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="addressFlag"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="startDate" type="xs:date" />
+			<xs:element minOccurs="0" name="endDate" type="xs:date" />
+			<xs:element minOccurs="0" name="flat" type="xs:string" />
+			<xs:element minOccurs="0" name="house" type="xs:string" />
+			<xs:element minOccurs="0" name="building" type="xs:string" />
+			<xs:element minOccurs="0" name="corpus" type="xs:string" />
+			<xs:element minOccurs="0" name="streetName"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="cityName" type="xs:string" />
+			<xs:element minOccurs="0" name="state" type="xs:string" />
+			<xs:element minOccurs="0" name="regionCode"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="country" type="xs:string" />
+			<xs:element minOccurs="0" name="zipCode" type="xs:string" />
+			<xs:element minOccurs="0" name="phoneNumber"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="scoring">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:string" />
+			<xs:element minOccurs="0" name="cardId" type="xs:string" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element minOccurs="0" name="score" type="xs:decimal" />
+			<xs:element minOccurs="0" name="errorCode"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="errorMessage"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="reasonCode"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="replyError">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="code" type="xs:token" />
+			<xs:element minOccurs="0" name="text" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="clientAddress">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="addrSince" type="xs:date" />
+			<xs:element minOccurs="0" name="addressType"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="address" type="xs:string" />
+			<xs:element minOccurs="0" name="index" type="xs:string" />
+			<xs:element minOccurs="0" name="countryCode"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="regionCode"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="district" type="xs:string" />
+			<xs:element minOccurs="0" name="city" type="xs:string" />
+			<xs:element minOccurs="0" name="streetType"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="street" type="xs:string" />
+			<xs:element minOccurs="0" name="house" type="xs:string" />
+			<xs:element minOccurs="0" name="corpus" type="xs:string" />
+			<xs:element minOccurs="0" name="building" type="xs:string" />
+			<xs:element minOccurs="0" name="flat" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="clientContact">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="contSince" type="xs:date" />
+			<xs:element minOccurs="0" name="contactType"
+				type="xs:token" />
+			<xs:element minOccurs="0" name="contact" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="genderCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MALE" />
+			<xs:enumeration value="FEMALE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="consentPurposeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CONTRACT" />
+			<xs:enumeration value="TRUSTWORTHINESS" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ownerCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INDIVIDUAL" />
+			<xs:enumeration value="SUPPLEMENTARY_CARD" />
+			<xs:enumeration value="AUTHORIZED_USER" />
+			<xs:enumeration value="JOINT" />
+			<xs:enumeration value="GUARANTOR" />
+			<xs:enumeration value="BUSINESS" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ratingCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTIVE" />
+			<xs:enumeration value="PAID_BY_COLLATERAL" />
+			<xs:enumeration value="ACCOUNT_CLOSED" />
+			<xs:enumeration value="DISPUTE" />
+			<xs:enumeration value="IN_DEFAULT_OR_PAST_DUE" />
+			<xs:enumeration value="FRAUD" />
+			<xs:enumeration value="SOLD_TO_ANOTHER_BANK" />
+			<xs:enumeration value="REFINANCED" />
+			<xs:enumeration value="TRANSFERED_TO_COLLECTORS" />
+			<xs:enumeration value="BLOCKED" />
+			<xs:enumeration value="CANCELED" />
+			<xs:enumeration value="DATA_SUBMISSION_STOPPED" />
+			<xs:enumeration value="COMPULSORY_PAYMENT" />
+			<xs:enumeration value="WRITE_OFF" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="accountType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AUTO_LOAN" />
+			<xs:enumeration value="LEASING" />
+			<xs:enumeration value="MORTAGE" />
+			<xs:enumeration value="CREDIT_CARD" />
+			<xs:enumeration value="CONSUMER_CREDIT" />
+			<xs:enumeration value="DEVELOPMENT_OF_BUSINESS" />
+			<xs:enumeration value="ENLARGING_CIRCULATING_ASSETS" />
+			<xs:enumeration value="EQUIPMENT_PURCHASE" />
+			<xs:enumeration value="BUILDING_REAL_ESTATE" />
+			<xs:enumeration value="SECURITIES_PURCHASE" />
+			<xs:enumeration value="INTER_BANK_CREDIT" />
+			<xs:enumeration value="ACCOUNT_REVIEW" />
+			<xs:enumeration value="UNKNOWN" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="overdueCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PRINCIPAL_DEBT" />
+			<xs:enumeration value="INTEREST_AND_PENALTIES" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="collateralCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REPAYMENT" />
+			<xs:enumeration value="NO_REPAYMENT" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="facilityCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AVAILABLE" />
+			<xs:enumeration value="TEMPORARY_UNAVAILABLE" />
+			<xs:enumeration value="DISCONTINUED" />
+			<xs:enumeration value="UNKNOWN" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="currencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EUR" />
+			<xs:enumeration value="RUB" />
+			<xs:enumeration value="USD" />
+			<xs:enumeration value="CHF" />
+			<xs:enumeration value="JPY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="interestFrequencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WEEKLY" />
+			<xs:enumeration value="FORNIGHTLY" />
+			<xs:enumeration value="MONTHLY" />
+			<xs:enumeration value="QUARTERLY" />
+			<xs:enumeration value="HALF_YEARLY" />
+			<xs:enumeration value="YEARLY" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="termsFrequencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WEEKLY" />
+			<xs:enumeration value="FORNIGHTLY" />
+			<xs:enumeration value="MONTHLY" />
+			<xs:enumeration value="QUARTERLY" />
+			<xs:enumeration value="HALF_YEARLY" />
+			<xs:enumeration value="YEARLY" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="disputedStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OWNERSHIP_DISPUTE" />
+			<xs:enumeration value="INCORRECT_APPLICANT" />
+			<xs:enumeration value="NOT_LIABLE_FOR_ACCOUNT" />
+			<xs:enumeration value="UNKNOWN_COLLECTION" />
+			<xs:enumeration value="BALANCE_DISPUTE" />
+			<xs:enumeration value="SETTLEMENT_MADE" />
+			<xs:enumeration value="ACCOUNT_RELATED_ISSUES" />
+			<xs:enumeration value="INSURANCE_CLAIM_DELAYED" />
+			<xs:enumeration value="LATE_DUE_TO_CHANGE_OF_ADDRESS" />
+			<xs:enumeration value="ACCOUNT_INCLUDED_IN_BANKRUPTCY" />
+			<xs:enumeration
+				value="ACCOUNT_EXCLUDED_FROM_BANKRUPTCY" />
+			<xs:enumeration value="BANKRUPTCY_OF_ANOTHER_PERSON" />
+			<xs:enumeration value="OTHER" />
+			<xs:enumeration value="ACCOUNT_DATE_ISSUES" />
+			<xs:enumeration value="ACCOUNT_CLOSED" />
+			<xs:enumeration value="NATURAL_DISASTER_VICTIM" />
+			<xs:enumeration value="ACCOUNT_CLOSED_BY_CONSUMER" />
+			<xs:enumeration value="INCORRECT_LINE_OF_CREDIT" />
+			<xs:enumeration value="ACCOUNT_CANCELED_BY_CONSUMER" />
+			<xs:enumeration value="ACCOUNT_IN_LEGAL_PROCESSED" />
+			<xs:enumeration
+				value="UPDATED_INFORMATION_BEING_PROCESSED" />
+			<xs:enumeration value="ACCOUNT_EXPECTED_TO_BE_DELETED" />
+			<xs:enumeration value="INACCURATE_INFORMATION" />
+			<xs:enumeration value="FRAUD_IDENTITY_THEFT" />
+			<xs:enumeration value="FRAUD_ACCOUNT_TAKEOVER" />
+			<xs:enumeration value="COLLECTIONS_DISPUTE" />
+			<xs:enumeration value="MILITARY_DUTY" />
+			<xs:enumeration value="ACCOUNT_DEFFERED" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="warningCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FIO" />
+			<xs:enumeration value="BIRTH" />
+			<xs:enumeration value="DOC_NO" />
+			<xs:enumeration value="DOC_NEW" />
+			<xs:enumeration value="FULLNAME" />
+			<xs:enumeration value="BIRTHDAY" />
+			<xs:enumeration value="DOC_DATE" />
+			<xs:enumeration value="DOC_END_DATE" />
+			<xs:enumeration value="INN_SUM" />
+			<xs:enumeration value="INN" />
+			<xs:enumeration value="PFNO_SUM" />
+			<xs:enumeration value="PFNO" />
+			<xs:enumeration value="CONSENTDATE" />
+			<xs:enumeration value="APPLICATION_DATE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="errorCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SUBJECT_NOT_FOUND" />
+			<xs:enumeration value="SUPPRESSED_FILE_FOUND" />
+			<xs:enumeration value="INTERNAL_ERROR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="addressType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REGISTRATION_ADDR" />
+			<xs:enumeration value="ACTUAL_ADDR" />
+			<xs:enumeration value="POSTAL_ADDR" />
+			<xs:enumeration value="POST_OFFICE_BOX" />
+			<xs:enumeration value="WORK_ADDR" />
+			<xs:enumeration value="OTHER" />
+			<xs:enumeration value="UNKNOWN" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="contactType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WORK_PHONE" />
+			<xs:enumeration value="HOME_PHONE" />
+			<xs:enumeration value="FAX" />
+			<xs:enumeration value="CELL_PHONE" />
+			<xs:enumeration value="CELL_WORK_PHONE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+
+</xs:schema>

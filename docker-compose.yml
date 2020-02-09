@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+    ucb-service:
+        container_name: ucb-service
+        ports:
+            - '8090:8090'
+        image: ucb-service

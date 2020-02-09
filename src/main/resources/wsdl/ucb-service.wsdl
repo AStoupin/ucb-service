@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.cetelem.ru/ucbservice/api/schema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" name="ucb-service"
+	targetNamespace="http://www.cetelem.ru/ucbservice/api/schema">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://www.cetelem.ru/ucbservice/api/schema"
+				schemaLocation="ucb-service.xsd">
+			</xsd:import>
+		</xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.cetelem.ru/ucbservice/api/schema">
+        	<xsd:element name="getVersionResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+
+        				<xsd:element name="out" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element></xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="invokeRequestInEnvelope">
+		<wsdl:part name="invokeRequest" element="tns:invokeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="invokeResponseOutEnvelope">
+		<wsdl:part element="tns:invokeResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getOrInvokeRequestEnvelope">
+		<wsdl:part name="getOrInvokeRequest" element="tns:getOrInvokeRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOrInvokeResponseEnvelope">
+		<wsdl:part name="parameters" element="tns:getOrInvokeResponse"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="getVersionRequest">
+	</wsdl:message>
+	<wsdl:message name="getVersionResponse">
+		<wsdl:part name="parameters" element="tns:getVersionResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ucb-service">
+		<wsdl:operation name="invoke">
+			<wsdl:input message="tns:invokeRequestInEnvelope" />
+			<wsdl:output message="tns:invokeResponseOutEnvelope" />
+		</wsdl:operation>
+		<wsdl:operation name="getOrInvoke">
+			<wsdl:input message="tns:getOrInvokeRequestEnvelope"></wsdl:input>
+			<wsdl:output message="tns:getOrInvokeResponseEnvelope"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getVersion">
+			<wsdl:input message="tns:getVersionRequest"></wsdl:input>
+			<wsdl:output message="tns:getVersionResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	
+	<wsdl:binding name="UcbService"
+		type="tns:ucb-service">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+			
+		<wsdl:operation name="invoke">
+			<soap:operation
+				soapAction="http://www.cetelem.ru/ucb-service/api/invoke" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+
+		<wsdl:operation name="getOrInvoke">
+			<soap:operation
+				soapAction="http://www.cetelem.ru/ucb-service/api/getOrInvoke" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>		
+		
+		<wsdl:operation name="getVersion">
+			<soap:operation
+				soapAction="http://www.cetelem.ru/ucb-service/api/getOrInvoke" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>		
+	</wsdl:binding>
+	
+	
+	<wsdl:service name="ucb-service">
+		<wsdl:port binding="tns:UcbService"
+			name="UcbService">
+			<soap:address location="http://www.cetelem.ru/ucb-service/api/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
